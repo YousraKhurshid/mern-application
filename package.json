@@ -1,0 +1,22 @@
+{
+  "name": "web-dev-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YousraKhurshid/Full-Stack-MERN-App.git"
+  },
+  "keywords": [
+    "web"
+  ],
+  "author": "yousra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YousraKhurshid/Full-Stack-MERN-App/issues"
+  },
+  "homepage": "https://github.com/YousraKhurshid/Full-Stack-MERN-App#readme"
+}
