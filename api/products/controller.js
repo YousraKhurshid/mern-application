@@ -51,5 +51,140 @@ const postProducts = (req, res) => {
 
 }
 
+const getAllproducts = async (req, res) => {
 
-module.exports = { getProducts, postProducts }
+    try {
+        await connect(process.env.MONGO_URI)
+        const allproducts = await product.find()
+        res.json({
+            product: allproducts
+        })
+
+    }
+
+
+    catch (error) {
+        res.status(400).json({
+            message: error.message
+        })
+    }
+
+}
+
+
+const getproductByID = async (req, res) => {
+
+    const { _id } = req.query
+
+
+    try {
+        await connect(process.env.MONGO_URI)
+        const product = await product.findOne({ _id })
+        res.json({ product })
+    }
+
+
+    catch (error) {
+        res.status(400).json({
+            message: error.message
+        })
+    }
+
+}
+const getproductBycategory = async (req, res) => {
+
+    const { _category } = req.query
+
+
+    try {
+        await connect(process.env.MONGO_URI)
+        const product = await product.find({ _category })
+        res.json({ product })
+    }
+
+
+    catch (error) {
+        res.status(400).json({
+            message: error.message
+        })
+    }
+
+}
+const getproductByBrand = async (req, res) => {
+
+    const { _Brand } = req.query
+
+
+    try {
+        await connect(process.env.MONGO_URI)
+        const product = await product.find({ _Brand })
+        res.json({ product })
+    }
+
+
+    catch (error) {
+        res.status(400).json({
+            message: error.message
+        })
+    }
+
+}
+
+const updateproduct = async (req, res) => {
+    const { _id, productName, productImage } = req.body
+
+    const filter = { _id };
+    const update = { productName, productImage };
+
+    try {
+        await connect(process.env.MONGO_URI)
+
+        await product.findOneAndUpdate(filter, update, {
+            new: true
+        });
+
+        const product = await product.find()
+
+        res.json({
+            message: "Success",
+            product
+        })
+
+    }
+
+
+    catch (error) {
+        res.status(400).json({
+            message: error.message
+        })
+    }
+
+}
+
+const deleteproduct = async (req, res) => {
+
+    const { _id } = req.body
+
+
+    try {
+        await connect(process.env.MONGO_URI)
+        await product.deleteOne({ _id })
+        const product = await product.find()
+        res.status(200).json({
+            message: "Deleted Successfully",
+            product
+        })
+    }
+
+
+    catch (error) {
+        res.status(400).json({
+            message: error.message
+        })
+    }
+
+}
+
+
+
+module.exports = { getProducts, postProducts, getAllproducts, getproductByID, getproductBycategory, getproductByBrand, updateproduct, deleteproduct}

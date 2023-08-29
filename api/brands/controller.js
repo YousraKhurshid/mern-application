@@ -59,4 +59,59 @@ const getAllBrands = async (req, res) => {
 
 }
 
-module.exports = { AddBrand, brandByID, getAllBrands }
+const updatebrand = async (req, res) => {
+    const { _id, brandName, brandImage } = req.body
+
+    const filter = { _id };
+    const update = { brandName, brandImage };
+
+    try {
+        await connect(process.env.MONGO_URI)
+
+        await brand.findOneAndUpdate(filter, update, {
+            new: true
+        });
+
+        const brand = await brand.find()
+
+        res.json({
+            message: "Success",
+            brand
+        })
+
+    }
+
+
+    catch (error) {
+        res.status(400).json({
+            message: error.message
+        })
+    }
+
+}
+
+const deletebrand = async (req, res) => {
+
+    const { _id } = req.body
+
+
+    try {
+        await connect(process.env.MONGO_URI)
+        await brand.deleteOne({ _id })
+        const brand = await brand.find()
+        res.status(200).json({
+            message: "Deleted Successfully",
+            brand
+        })
+    }
+
+
+    catch (error) {
+        res.status(400).json({
+            message: error.message
+        })
+    }
+
+}
+
+module.exports = { AddBrand, brandByID, getAllBrands, updatebrand, deletebrand }
