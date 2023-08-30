@@ -1,3 +1,7 @@
+const product = require('./model')
+const { connect } = require('mongoose')
+require('dotenv').config()
+
 const getProducts = (req, res) => {
     res.json({
         products: [
@@ -51,7 +55,7 @@ const postProducts = (req, res) => {
 
 }
 
-const getAllproducts = async (req, res) => {
+const getallProducts = async (req, res) => {
 
     try {
         await connect(process.env.MONGO_URI)
@@ -187,4 +191,4 @@ const deleteproduct = async (req, res) => {
 
 
 
-module.exports = { getProducts, postProducts, getAllproducts, getproductByID, getproductBycategory, getproductByBrand, updateproduct, deleteproduct}
+module.exports = { getProducts, postProducts, getallProducts, getproductByID, getproductBycategory, getproductByBrand, updateproduct, deleteproduct}

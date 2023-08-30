@@ -59,7 +59,7 @@ const getAllBrands = async (req, res) => {
 
 }
 
-const updatebrand = async (req, res) => {
+const updateBrand = async (req, res) => {
     const { _id, brandName, brandImage } = req.body
 
     const filter = { _id };
@@ -90,7 +90,7 @@ const updatebrand = async (req, res) => {
 
 }
 
-const deletebrand = async (req, res) => {
+const deleteBrand = async (req, res) => {
 
     const { _id } = req.body
 
@@ -114,4 +114,4 @@ const deletebrand = async (req, res) => {
 
 }
 
-module.exports = { AddBrand, brandByID, getAllBrands, updatebrand, deletebrand }
+module.exports = { AddBrand, brandByID, getAllBrands, updateBrand, deleteBrand }
