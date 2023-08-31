@@ -32,9 +32,9 @@ export default function Sidebar() {
     return (
         <>
 
-            <div className="bg-primary p-3 d-flex text-white justify-content-between align-items-center">
+            <div className="bg-primary p-3 d-flex text-dark justify-content-between align-items-center">
                 <span>Admin Name</span>
-                <button className="btn btn-outline-light"
+                <button className="btn btn-outline-dak"
                     onClick={() => dispatch({ type: "USER_LOGOUT" })}>Logout</button>
             </div>
 
@@ -43,7 +43,7 @@ export default function Sidebar() {
                 {
                     NavItems.map((val, key) =>
 
-                        <li key={key} className={`nav-item m-2  ${location.pathname == val.url ? 'bg-white rounded' : null}`}>
+                        <li key={key} className={`nav-item m-2  ${location.pathname == val.url ? 'bg-light rounded' : null}`}>
                             <Link className='nav-link d-flex align-items-center  gap-2' to={val.url}>
                                 <span>{val.icon}</span>
 

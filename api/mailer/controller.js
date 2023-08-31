@@ -6,13 +6,13 @@ const sendMail = (req, res) => {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'uusman004@gmail.com',
+            user: 'YousraKhurshid1@gmail.com',
             pass: 'zgzuotyggbbzsrrl'
         }
     });
 
     let message = {
-        from: "uusman004@gmail.com",
+        from: "YousraKhurshid1@gmail.com",
         to: userEmail,
         Subject: "Place Order",
         html: "<h1>Hello World</h1>"
@@ -27,7 +27,7 @@ const sendFancyMail = (req, res) => {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'uusman004@gmail.com',
+            user: 'YousraKhurshid1@gmail.com',
             pass: 'zgzuotyggbbzsrrl'
         }
     });
@@ -58,7 +58,7 @@ const sendFancyMail = (req, res) => {
 
 
     let message = {
-        from: "uusman004@gmail.com",
+        from: "YousraKhurshid1@gmail.com",
         to: userEmail,
         subject: "Place Order",
         html: MailGenerator.generate(response)
