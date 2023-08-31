@@ -16,13 +16,13 @@ const port = process.env.SERVER_PORT || 3500
 const cors = require('cors')
 const path = require('path')
 
-// const clientPath = path.join(__dirname, './client/dist')
+const clientPath = path.join(__dirname, './client/dist')
 
 
 
 app.use(express.json())
 app.use(cors())
-// app.use('/', express.static(clientPath))
+app.use('/',  express.static(clientPath))
 app.use('/api', userRouter)
 app.use('/api', productsRouter)
 app.use('/api', brandsRouter)
@@ -37,12 +37,12 @@ app.use('/api', oderRouter)
 //     .catch((err) => console.log(err.message))
 
 
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, './client/dist/index.html'))
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './client/dist/index.html'))
 
-// })
+})
 
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`Example app listening on port http://localhost:${port}`)
 })
