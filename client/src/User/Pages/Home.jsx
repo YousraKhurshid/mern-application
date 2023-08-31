@@ -3,6 +3,7 @@ import HeaderSection from '../../user/components/HeaderSection'; // Correct rela
 import FooterSection from '../../user/components/FooterSection'; // Correct relative path
 import AboutUs from '../../user/components/AboutUs';
 import Brands from './Brands'
+
 export default function Home() {
   return (
     <div>
