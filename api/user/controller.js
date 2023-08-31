@@ -5,6 +5,19 @@ const { hash, compare } = require('bcryptjs')
 const { sign } = require('jsonwebtoken')
 
 
+const assignAdminRole = async (req, res) => {
+    try {
+      const user = await User.findBy_Id(req.params.user_Id);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      user.role = 'admin';
+      await user.save();
+      res.json({ message: 'User role updated to admin' });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  };
 
 const Dummy = (req, res) => {
     res.json({
@@ -16,32 +29,31 @@ const Dummy = (req, res) => {
 const SignUp = async (req, res) => {
     const { username, password, email } = req.body;
 
-
     try {
-        await mongoose.connect(process.env.MONGO_URI)
-        console.log("DB Connected")
-        const existingUser = await User.exists({ email: email })
+        await mongoose.connect(process.env.MONGO_URI);
+        console.log("DB Connected");
+        const existingUser = await User.exists({ email: email });
         if (existingUser) {
             res.status(208).json({
                 message: "User Already Exists"
-            })
-        }
+            });
+        } else {
+            // Define default role (e.g., 'user')
+            const defaultRole = 'user';
 
-        else {
-            await User.create({ username, email, password: await hash(password, 12) })
-            console.log("User Created")
+            // Create a new user with the default role
+            await User.create({ username, email, password: await hash(password, 12), role: defaultRole });
+            console.log("User Created");
             res.status(201).json({
                 message: "Signup Successfully"
-            })
+            });
         }
-    }
-    catch (error) {
+    } catch (error) {
         res.status(500).json({
             message: error.message
-        })
+        });
     }
-}
-
+};
 const Login = async (req, res) => {
 
     const { password, email } = req.body;
@@ -229,4 +241,4 @@ const deleteUser = async (req, res) => {
 
 
 
-module.exports = { Dummy, SignUp, Login, allUsers, getUserbyEmail, userbyEmail, updateUser, deleteUser }
+module.exports = { Dummy, assignAdminRole, SignUp, Login, allUsers, getUserbyEmail, userbyEmail, updateUser, deleteUser }
