@@ -37,7 +37,7 @@ export default function CustomCart() {
                         <label className="title">Your cart</label>
                         <div className="products">
                             {
-                                cart_state.cart.map((val, key) => <div key={key} className="product">
+                                cart_state.cart.map((val, key) => <div key={key} className="$product">
                                     <div>
                                         <img src={val.thumbnail} alt="" style={{ height: '10vh', objectFit: 'contain' }} />
                                     </div>
