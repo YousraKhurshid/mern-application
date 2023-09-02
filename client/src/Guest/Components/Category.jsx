@@ -3,12 +3,12 @@ import GuestCards from './GuestCards'
 import axios from 'axios'
 
 export default function Category() {
-    const [category, setCategory] = useState([])
+    const [category, setcategory] = useState([])
     useEffect(() => {
         axios.get('http://localhost:8000/api/get-all-categories')
             .then(json => {
-                if (json.data.categories) {
-                    setCategory(json.data.categories);
+                if (json.data.category) {
+                    setcategory(json.data.category);
                 }
             })
             .catch(err => alert(err.message));

@@ -2,17 +2,11 @@ import React, { useEffect, useState } from 'react'
 import GuestCards from './GuestCards'
 import axios from 'axios'
 
-export default function Brand() {
-    const [brands, setbrands] = useState([])
-
+export default function Brands() {
+    const [brands, setBrands] = useState([])
     useEffect(() => {
-        axios.get('http://localhost:8000/api/get-all-brands')
-            .then(json => setbrands(json.data.brands))
-            .catch(err => alert(err.message))
+        axios.get('http://localhost:8000/api/get-all-brands').then(json => setBrands(json.data.brands)).catch(err => alert(err.message))
     }, [])
-
-
-
 
     return (
         <div className="container my-5">
