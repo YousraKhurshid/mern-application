@@ -32,7 +32,7 @@ export default function Sidebar() {
     return (
         <>
 
-            <div className="bg-primary p-3 d-flex text-dark justify-content-between align-items-center">
+            <div className="bg-warning p-3 d-flex text-dark justify-content-between align-items-center">
                 <span>Admin Name</span>
                 <button className="btn btn-outline-dak"
                     onClick={() => dispatch({ type: "USER_LOGOUT" })}>Logout</button>
