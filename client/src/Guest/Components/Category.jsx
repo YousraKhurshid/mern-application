@@ -7,8 +7,8 @@ export default function Category() {
     useEffect(() => {
         axios.get('http://localhost:8000/api/get-all-categories')
             .then(json => {
-                if (json.data.category) {
-                    setcategory(json.data.category);
+                if (json.data.categories) {
+                    setcategory(json.data.categories);
                 }
             })
             .catch(err => alert(err.message));
@@ -23,8 +23,8 @@ export default function Category() {
             </div>
     
             <div className="row my-5">
-                {category && category.length > 0 ? (
-                    category.map((val, key) => <GuestCards key={key} image={val.CategoryImage} name={val.CategoryName} />)
+                {categories && categories.length > 0 ? (
+                    categories.map((val, key) => <GuestCards key={key} image={val.CategoryImage} name={val.CategoryName} />)
                 ) : (
                     <p>No categories available.</p>
                 )}

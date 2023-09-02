@@ -4,6 +4,7 @@ import axios from 'axios'
 
 export default function Products() {
     const [products, setProducts] = useState([])
+
     useEffect(() => {
         axios.get('http://localhost:8000/api/get-all-products')
             .then(json => setProducts(json.data.products))
@@ -18,10 +19,13 @@ export default function Products() {
             </div>
 
             <div className="row my-5">
-                {
-                    products.map((val, key) => <UserCards key={key} image={val.thumbnail} name={val.productName} url={`/products/${val._id}`} />)
-                }
-
+                {products.length > 0 ? (
+                    products.map((val, key) => (
+                        <UserCards key={key} image={val.thumbnail} name={val.productName} url={`/products/${val._id}`} />
+                    ))
+                ) : (
+                    <p>Loading products...</p>
+                )}
             </div>
         </div>
     )
