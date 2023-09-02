@@ -7,7 +7,7 @@ import { decodeToken } from 'react-jwt'
 import { ClimbingBoxLoader } from 'react-spinners'
 
 
-const AppRoute = 'http://localhost:8000/'
+export const AppRoute = 'http://localhost:8000/'
 
 const ComponentByRoles = {
   'admin': Admin,
