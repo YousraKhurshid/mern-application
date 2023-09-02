@@ -7,8 +7,8 @@ export default function Category() {
     useEffect(() => {
         axios.get('http://localhost:8000/api/all-categories')
             .then(json => {
-                if (json.data.category) {
-                    setcategory(json.data.category);
+                if (json.data.categories) {
+                    setcategory(json.data.categories);
                 }
             })
             .catch(err => alert(err.message));
