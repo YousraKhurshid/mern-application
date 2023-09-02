@@ -16,7 +16,7 @@ function ProductModal() {
     const [thumbnail, setThumbnail] = useState(null)
     const [description, setDescription] = useState("")
     const [price, setPrice] = useState(0)
-    const [images, setImages] = useState([])
+    const [productImage, setproductImage] = useState([])
 
 
 
@@ -37,8 +37,8 @@ function ProductModal() {
     }
 
     const urls = []
-    const MultipleImageUpload = () => images?.map((val) => {
-        const MultipleImageRef = ref(storage, `/images/products/${productName}/${val.name}`);
+    const MultipleImageUpload = () => productImage?.map((val) => {
+        const MultipleImageRef = ref(storage, `/productImage/products/${productName}/${val.name}`);
         return uploadBytes(MultipleImageRef, val).then((snapshot) => {
             return getDownloadURL(snapshot.ref).then((url) => { urls.push(url) }).catch((error) => alert(error));
         });
@@ -51,10 +51,10 @@ function ProductModal() {
 
     const AddProduct = (e) => {
         e.preventDefault();
-        const uploadImages = MultipleImageUpload()
-        Promise.all(uploadImages)
+        const uploadproductImage = MultipleImageUpload()
+        Promise.all(uploadproductImage)
             .then(() => {
-                const storageRef = ref(storage, `/images/products/${productName}/${thumbnail.name}`);
+                const storageRef = ref(storage, `/productImage/products/${productName}/${thumbnail.name}`);
                 uploadBytes(storageRef, thumbnail).then((snapshot) => {
                     getDownloadURL(snapshot.ref)
                         .then((url) => {
@@ -63,7 +63,7 @@ function ProductModal() {
                                 brand,
                                 category,
                                 price,
-                                images: urls,
+                                productImage: urls,
                                 thumbnail: url,
                                 description
 
@@ -125,13 +125,13 @@ function ProductModal() {
 
                         <div className="mb-3">
 
-                            <p className='mb-0 fw-semibold'>Choose Images</p>
-                            <small className="text-secondary">Double Click to Delete Images</small>
+                            <p className='mb-0 fw-semibold'>Choose productImage</p>
+                            <small className="text-secondary">Double Click to Delete productImage</small>
                             <div className="mt-2 d-flex gap-2 align-items-center">
                                 {
-                                    images.map((val, key) =>
+                                    productImage.map((val, key) =>
                                         <div key={key} className="bg-light border rounded col-md-1"
-                                            onDoubleClick={() => setImages(images.filter((img) => img != val))}>
+                                            onDoubleClick={() => setproductImage(productImage.filter((img) => img != val))}>
                                             <img style={{ height: '10vh', cursor: 'pointer', objectFit: 'contain' }}
                                                 className='img-fluid' src={URL.createObjectURL(val)} alt="" />
                                         </div>)
@@ -142,7 +142,7 @@ function ProductModal() {
                             </div>
 
 
-                            <input className="form-control d-none" onChange={(e) => setImages([...images, e.target.files[0]])} type="file" id="formFile" />
+                            <input className="form-control d-none" onChange={(e) => setproductImage([...productImage, e.target.files[0]])} type="file" id="formFile" />
                         </div>
 
 
