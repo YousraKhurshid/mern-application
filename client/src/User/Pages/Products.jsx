@@ -1,15 +1,27 @@
-import React, { useEffect, useState } from 'react'
-import UserCards from '../Components/UserCards'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react';
+import UserCards from '../Components/UserCards';
+import axios from 'axios';
 
 export default function Products() {
-    const [products, setProducts] = useState([])
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true); // Add loading state
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/get-all-products')
-            .then(json => setProducts(json.data.products))
-            .catch(err => console.log(err))
-    }, [])
+        axios.get('http://localhost:8000/api/getallproducts')
+            .then(response => {
+                if (response.data && response.data.products) {
+                    setProducts(response.data.products);
+                } else {
+                    console.error('Invalid API response:', response.data);
+                }
+            })
+            .catch(err => {
+                console.error('Error fetching data:', err);
+            })
+            .finally(() => {
+                setLoading(false); // Update loading state
+            });
+    }, []);
 
     return (
         <div className="container my-5">
@@ -19,14 +31,14 @@ export default function Products() {
             </div>
 
             <div className="row my-5">
-                {products.length > 0 ? (
+                {loading ? (
+                    <p>Loading products...</p>
+                ) : (
                     products.map((val, key) => (
                         <UserCards key={key} image={val.thumbnail} name={val.productName} url={`/products/${val._id}`} />
                     ))
-                ) : (
-                    <p>Loading products...</p>
                 )}
             </div>
         </div>
-    )
+    );
 }
