@@ -31,13 +31,14 @@ export default function Products() {
             </div>
 
             <div className="row my-5">
-                {loading ? (
-                    <p>Loading products...</p>
-                ) : (
-                    products.map((val, key) => (
-                        <UserCards key={key} image={val.thumbnail} name={val.productName} url={`/product/${val._id}`} />
-                    ))
-                )}
+            {products.length > 0 ? (
+    products.map((val, key) => (
+        <UserCards key={key} image={val.thumbnail} name={val.productName} url={`/products/${val._id}`} />
+    ))
+) : (
+    <p>No products available.</p>
+)}
+
             </div>
         </div>
     );
