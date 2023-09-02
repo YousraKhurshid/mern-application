@@ -7,7 +7,7 @@ export default function Products() {
     const [loading, setLoading] = useState(true); // Add loading state
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/getallproducts')
+        axios.get(`http://localhost:8000/api/getallproducts`)
             .then(response => {
                 if (response.data && response.data.products) {
                     setProducts(response.data.products);
