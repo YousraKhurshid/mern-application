@@ -24,7 +24,7 @@ export default function UserNav() {
                     </Nav>
 
                     <div className="d-flex gap-3">
-                        <Link to='/profile' className="btn btn-outline-primary d-flex align-items-center gap-2">
+                        <Link to='/profile' className="btn btn-outline-warning d-flex align-items-center gap-2">
                             <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" style={{ height: '3vh', objectFit: 'contain' }} alt="" />
                             <div className="profile-card align-items-center">
                                <p className="align-items-center">{state.UserName}</p>

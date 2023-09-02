@@ -20,7 +20,7 @@ export default function Category() {
 
     return (
         <div className="container">
-            <div className="d-flex justify-content-between align-items-center bg-primary p-2 my-3 rounded">
+            <div className="d-flex justify-content-between align-items-center bg-warning p-2 my-3 rounded">
                 <span className='fs-4 fw-bold text-white'>Categories</span>
                 <CategoryModal recallData={setCategory} />
             </div>

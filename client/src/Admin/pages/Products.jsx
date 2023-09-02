@@ -32,7 +32,7 @@ export default function Products() {
 
     return (
         <div className="container">
-            <div className="d-flex justify-content-between align-items-center bg-primary p-2 my-3 rounded">
+            <div className="d-flex justify-content-between align-items-center bg-warning p-2 my-3 rounded">
                 <span className='fs-4 fw-bold text-white'>Products</span>
                 <ProductModal />
             </div>
@@ -57,8 +57,8 @@ export default function Products() {
                                 <tr key={key}>
                                     <td><img src={val.thumbnail} className='img-fluid rounded-circle border border-secondary' style={{ height: '10vh', aspectRatio: 1 / 1, objectFit: 'contain' }} alt="" srcSet="" /></td>
                                     <td>{val.productName}</td>
-                                    <td>{val.category}</td>
-                                    <td>{val.brand}</td>
+                                    <td>{val.categories}</td>
+                                    <td>{val.brands}</td>
                                     <td>{val.price}</td>
                                     <td>{val.description.length < 20 ? val.description : val.description.substring(0, 20) + "..."}</td>
                                     <td className='d-flex justify-content-between'>
