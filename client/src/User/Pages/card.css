@@ -1,11 +1,11 @@
 /* card.css */
 .card {
-    border: 1px solid #e7a0ee;
+    border: 1px solid #b3924c;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(235, 117, 225, 0.1);
     padding: 20px;
     margin: 10px;
-    background: linear-gradient(135deg, #f767f76e, #f767f7c9,#e41ae4,#f767f7c9,#f767f76e,);;
+    background: linear-gradient(135deg, #f767f76e, #f767f7c9,#917519,#f767f7c9,#f767f76e,);;
     transition: transform 0.2s ease-in-out;
     height: 100%; /* Set a fixed height for the cards */
     display: flex;

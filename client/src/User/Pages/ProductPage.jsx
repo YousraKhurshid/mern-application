@@ -11,20 +11,19 @@ export default function ProductPage() {
     const { cart_state, cart_dispatch } = useContext(CartContext)
 
     useEffect(() => {
-        console.log(cart_state)
-        axios.get(`http://localhost:8000/api/get-product-by-id/${_id}`)
+        axios.get(`/api/get-product-by-id/${_id}`)
             .then(json => setProduct(json.data.products))
             .catch(err => console.log(err))
-    },[])
+    }, [])
 
     const addtocart = () => {
         const payload = { ...product, quantity }
+        console.log(payload)
 
         cart_dispatch({
             type: "ADD_TO_CART",
             payload
         })
-
     }
 
     return (
