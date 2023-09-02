@@ -1,137 +1,85 @@
-const product = require('./model')
-const { connect } = require('mongoose')
+const { connect } = require("mongoose")
 require('dotenv').config()
+const Products = require('./model')
 
-const getProducts = (req, res) => {
-    res.json({
-        products: [
-            {
-                "id": 1,
-                "title": "iPhone 9",
-                "description": "An apple mobile which is nothing like apple",
-                "price": 549,
-                "discountPercentage": 12.96,
-                "rating": 4.69,
-                "stock": 94,
-                "brand": "Apple",
-                "category": "smartphones",
-                "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
-                "images": [
-                    "https://i.dummyjson.com/data/products/1/1.jpg",
-                    "https://i.dummyjson.com/data/products/1/2.jpg",
-                    "https://i.dummyjson.com/data/products/1/3.jpg",
-                    "https://i.dummyjson.com/data/products/1/4.jpg",
-                    "https://i.dummyjson.com/data/products/1/thumbnail.jpg"
-                ]
-            },
-            {
-                "id": 2,
-                "title": "iPhone X",
-                "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
-                "price": 899,
-                "discountPercentage": 17.94,
-                "rating": 4.44,
-                "stock": 34,
-                "brand": "Apple",
-                "category": "smartphones",
-                "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
-                "images": [
-                    "https://i.dummyjson.com/data/products/2/1.jpg",
-                    "https://i.dummyjson.com/data/products/2/2.jpg",
-                    "https://i.dummyjson.com/data/products/2/3.jpg",
-                    "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
-                ]
-            },
-        ]
-
-    })
-}
-
-
-const postProducts = (req, res) => {
-    res.json({
-        message: "Product Added Successfully"
-    })
-
-}
-
-const getallProducts = async (req, res) => {
+const getProducts = async (req, res) => {
 
     try {
         await connect(process.env.MONGO_URI)
-        const allproducts = await product.find()
-        res.json({
-            product: allproducts
-        })
+        const products = await Products.find()
+        res.json({ products })
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
 
+
+const postProducts = async (req, res) => {
+    const { productName, thumbnail, description, price, category, brand, productImage } = req.body
+
+    if (!productName || !thumbnail || !description || !price || !category || !brand || !productImage) {
+        res.status(400).json({ message: 'Invalid Payload' })
     }
 
+    else {
+        try {
+            await connect(process.env.MONGO_URI)
+            const checkExisting = await Products.exists({ productName })
+            if (checkExisting) {
+                res.status(403).json({ message: "Product Already Exists" })
+            }
+            else {
+                await Products.create({ productName, thumbnail, description, price, category, brand, productImage })
+                const products = await Products.find()
+                res.status(201).json({
+                    message: "Product Created Successfully",
+                    products
+                })
+            }
 
-    catch (error) {
-        res.status(400).json({
-            message: error.message
-        })
+        }
+        catch (error) {
+            res.status(400).json({ message: error.message })
+        }
     }
 
 }
 
-
-const getproductByID = async (req, res) => {
-
-    const { _id } = req.query
-
-
-    try {
+const ProductbyBrand = async (req, res) => {
+    const { brand } = req.params
+    if (!brand) {
+        res.status(403).json({ message: "Please Give BrandName" })
+    }
+    else {
         await connect(process.env.MONGO_URI)
-        const product = await product.findOne({ _id })
-        res.json({ product })
+        const products = await Products.find({ brand })
+        res.json({ products })
     }
-
-
-    catch (error) {
-        res.status(400).json({
-            message: error.message
-        })
-    }
-
 }
-const getproductBycategory = async (req, res) => {
 
-    const { _category } = req.query
-
-
-    try {
+const ProductbyCategory = async (req, res) => {
+    const { category } = req.params
+    if (!category) {
+        res.status(403).json({ message: "Please Give Category Name" })
+    }
+    else {
         await connect(process.env.MONGO_URI)
-        const product = await product.find({ _category })
-        res.json({ product })
+        const products = await Products.find({ category })
+        res.json({ products })
     }
-
-
-    catch (error) {
-        res.status(400).json({
-            message: error.message
-        })
-    }
-
 }
-const getproductByBrand = async (req, res) => {
 
-    const { _Brand } = req.query
-
-
-    try {
+const ProductbyId = async (req, res) => {
+    const { _id } = req.params
+    if (!_id) {
+        res.status(403).json({ message: "Please Give Product id" })
+    }
+    else {
         await connect(process.env.MONGO_URI)
-        const product = await product.find({ _Brand })
-        res.json({ product })
+        const products = await Products.findOne({ _id })
+        res.json({ products })
     }
-
-
-    catch (error) {
-        res.status(400).json({
-            message: error.message
-        })
-    }
-
 }
 
 const updateproduct = async (req, res) => {
@@ -191,4 +139,5 @@ const deleteproduct = async (req, res) => {
 
 
 
-module.exports = { getProducts, postProducts, getallProducts, getproductByID, getproductBycategory, getproductByBrand, updateproduct, deleteproduct}
+
+module.exports = { getProducts, postProducts, ProductbyBrand, ProductbyCategory, ProductbyId, updateproduct, deleteproduct }

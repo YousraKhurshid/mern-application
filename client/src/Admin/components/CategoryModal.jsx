@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import { storage } from '../utils/FirebaseConfig'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import axios from 'axios';
-
+import { AppRoute } from '../../App';
 
 function CategoryModal() {
     const [show, setShow] = useState(false);
@@ -25,7 +25,7 @@ function CategoryModal() {
             getDownloadURL(snapshot.ref)
                 .then((url) => {
                     const payload = { CategoryName, CategoryImage: url }
-                    axios.post('http://localhost:8000/api/create-category', payload)
+                    axios.post(`${AppRoute}api/add-category`, payload)
                         .then((json) => {
                             setShow(false);
                         })

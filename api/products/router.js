@@ -3,14 +3,13 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 router.use(bodyParser.json());
 
-const { getProducts, getallProducts, postProducts, getproductByID, getproductBycategory, getproductByBrand, updateproduct, deleteproduct } = require('./controller');
+const { getProducts, postProducts, ProductbyId, ProductbyCategory, ProductbyBrand, updateproduct, deleteproduct } = require('./controller');
 
-router.get('/product', getProducts);
-router.get('/getallproducts', getallProducts);
-router.post('/addproduct', postProducts);
-router.get('/get-product-by-id', getproductByID);
-router.get('/get-product-by-category', getproductBycategory);
-router.get('/get-product-by-brand', getproductByBrand);
+router.get('/get-all-products', getProducts)
+router.get('/get-product-by-id/:_id', ProductbyId)
+router.get('/get-product-by-category/:category', ProductbyCategory)
+router.get('/get-product-by-brand/:brand', ProductbyBrand)
+router.post('/add-products', postProducts)
 router.put('/update-product', updateproduct);
 router.delete('/delete-product', deleteproduct);
 
