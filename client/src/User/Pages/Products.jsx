@@ -35,7 +35,7 @@ export default function Products() {
                     <p>Loading products...</p>
                 ) : (
                     products.map((val, key) => (
-                        <UserCards key={key} image={val.thumbnail} name={val.productName} url={`/products/${val._id}`} />
+                        <UserCards key={key} image={val.thumbnail} name={val.productName} url={`/product/${val._id}`} />
                     ))
                 )}
             </div>
