@@ -1,10 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import ProductModal from '../components/ProductModal'
 import axios from 'axios'
+import { AiOutlineDelete, AiOutlineEdit } from react-icons/ai
+import { AppRoute } from '../../App'
 
 export default function Products() {
+     const [Products, setProduct] = useState([])
+     useEffect (()=> {
+         axios.get('http://localhost:8000/api/getallproducts')
+                .then(json => setProduct(json.data.products))
+                .catch(err => console.log(err.message))
+     })
 
-    const [Product, setProduct] = useState([])
+    let config = {
+        method: 'delete',
+        url: 'http://localhost:8000/api/delete-product',
+        data: payload
+    };
+    axios(config).then(json => console.log (json.data)).catch(err => console.log(err.message))
+
+
+
+
     return (
         <div className="container">
             <div className="d-flex justify-content-between align-items-center bg-primary p-2 my-3 rounded">
