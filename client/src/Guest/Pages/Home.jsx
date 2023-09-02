@@ -1,6 +1,6 @@
 import React from 'react'
-import Brands from '../Components/Brands'
-import Category from '../Components/Category'
+import Brands from '../User/Pages/Brands'
+import Category from '..User/Pages/Category'
 
 export default function Home() {
     return (
