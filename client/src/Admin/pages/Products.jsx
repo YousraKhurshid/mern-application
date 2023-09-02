@@ -1,34 +1,36 @@
-import React, { useEffect, useState } from 'react'
-import ProductModal from '../components/ProductModal'
-import axios from 'axios'
-import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
-import { AppRoute } from '../../App'
+import React, { useEffect, useState } from 'react';
+import ProductModal from '../components/ProductModal';
+import axios from 'axios';
+import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
+import { AppRoute } from '../../App';
 
 export default function Products() {
+    const [products, setProducts] = useState([]);
 
-    const [Product, setProduct] = useState([])
     useEffect(() => {
+        // Fetch products when the component mounts
         axios.get(`${AppRoute}api/get-all-products`)
-            .then(json => setProduct(json.data.products))
-            .catch(err => console.log(err.message))
-    })
+            .then(response => {
+                // Update the state with the fetched products
+                setProducts(response.data.products);
+            })
+            .catch(err => console.error(err));
+    }, []); // Empty dependency array to run this effect only once
 
-
-    const deleteproduct = (_id) => {
-        console.log(_id)
-        const payload = { _id }
-
+    const deleteProduct = (_id) => {
+        console.log(_id);
+        const payload = { _id };
 
         let config = {
             method: 'delete',
             url: '/api/delete-products',
-            data: payload
+            data: payload,
         };
 
-
-        axios(config).then(json => console.log(json.data)).catch(err => console.log(err))
-
-    }
+        axios(config)
+            .then(response => console.log(response.data))
+            .catch(err => console.error(err));
+    };
 
     return (
         <div className="container">
@@ -48,36 +50,41 @@ export default function Products() {
                             <th scope="col">Price</th>
                             <th scope="col">Description</th>
                             <th scope="col">Actions</th>
-
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            Product.map((val, key) =>
-                                <tr key={key}>
-                                    <td><img src={val.thumbnail} className='img-fluid rounded-circle border border-secondary' style={{ height: '10vh', aspectRatio: 1 / 1, objectFit: 'contain' }} alt="" srcSet="" /></td>
-                                    <td>{val.productName}</td>
-                                    <td>{val.categories}</td>
-                                    <td>{val.brands}</td>
-                                    <td>{val.price}</td>
-                                    <td>{val.description.length < 20 ? val.description : val.description.substring(0, 20) + "..."}</td>
-                                    <td className='d-flex justify-content-between'>
-                                        <button className="btn btn-dark" onClick={() => deleteproduct(val._id)}><AiOutlineDelete /></button>
-                                        <button className="btn btn-dark"><AiOutlineEdit /></button>
-
-                                    </td>
-
-
-
-                                </tr>)
-                        }
-
-
-
+                        {products.map((product) => (
+                            <tr key={product._id}>
+                                <td>
+                                    <img
+                                        src={product.thumbnail}
+                                        className="img-fluid rounded-circle border border-secondary"
+                                        style={{ height: '10vh', aspectRatio: 1 / 1, objectFit: 'contain' }}
+                                        alt=""
+                                    />
+                                </td>
+                                <td>{product.productName}</td>
+                                <td>{product.category}</td>
+                                <td>{product.brands}</td>
+                                <td>{product.price}</td>
+                                <td>
+                                    {product.description.length < 20
+                                        ? product.description
+                                        : product.description.substring(0, 20) + '...'}
+                                </td>
+                                <td className="d-flex justify-content-between">
+                                    <button className="btn btn-dark" onClick={() => deleteProduct(product._id)}>
+                                        <AiOutlineDelete />
+                                    </button>
+                                    <button className="btn btn-dark">
+                                        <AiOutlineEdit />
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
-
             </div>
         </div>
-    )
+    );
 }
