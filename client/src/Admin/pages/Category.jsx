@@ -8,7 +8,7 @@ export default function Category() {
     const [category, setCategory] = useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/get-all-categories')
+        axios.get('/api/all-categories')
             .then((json) => setCategory(json.data.categories))
             .catch((err) => console.log(err))
 

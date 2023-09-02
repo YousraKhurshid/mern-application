@@ -1,26 +1,34 @@
 import React, { useEffect, useState } from 'react'
 import ProductModal from '../components/ProductModal'
 import axios from 'axios'
-import { AiOutlineDelete, AiOutlineEdit } from react-icons/ai
+import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
 import { AppRoute } from '../../App'
 
 export default function Products() {
-     const [Products, setProduct] = useState([])
-     useEffect (()=> {
-         axios.get('http://localhost:8000/api/getallproducts')
-                .then(json => setProduct(json.data.products))
-                .catch(err => console.log(err.message))
-     })
 
-    let config = {
-        method: 'delete',
-        url: 'http://localhost:8000/api/delete-product',
-        data: payload
-    };
-    axios(config).then(json => console.log (json.data)).catch(err => console.log(err.message))
+    const [Product, setProduct] = useState([])
+    useEffect(() => {
+        axios.get(`${AppRoute}api/get-all-products`)
+            .then(json => setProduct(json.data.products))
+            .catch(err => console.log(err.message))
+    })
 
 
+    const deleteproduct = (_id) => {
+        console.log(_id)
+        const payload = { _id }
 
+
+        let config = {
+            method: 'delete',
+            url: '/api/delete-products',
+            data: payload
+        };
+
+
+        axios(config).then(json => console.log(json.data)).catch(err => console.log(err))
+
+    }
 
     return (
         <div className="container">
@@ -30,7 +38,7 @@ export default function Products() {
             </div>
 
             <div className="container">
-                <table className="table">
+                <table className="table align-middle">
                     <thead>
                         <tr>
                             <th scope="col">Image</th>
@@ -39,22 +47,30 @@ export default function Products() {
                             <th scope="col">Brand</th>
                             <th scope="col">Price</th>
                             <th scope="col">Description</th>
-
-
-
+                            <th scope="col">Actions</th>
 
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {
+                        {
                             Product.map((val, key) =>
                                 <tr key={key}>
-                                    <th scope="row">{val._id}</th>
-                                    <td>{val.ProductName}</td>
-                                    <td><img src={val.ProductImage} className='img-fluid' style={{ height: '5vh', objectFit: 'contain' }} alt="" srcSet="" /></td>
+                                    <td><img src={val.thumbnail} className='img-fluid rounded-circle border border-secondary' style={{ height: '10vh', aspectRatio: 1 / 1, objectFit: 'contain' }} alt="" srcSet="" /></td>
+                                    <td>{val.productName}</td>
+                                    <td>{val.category}</td>
+                                    <td>{val.brand}</td>
+                                    <td>{val.price}</td>
+                                    <td>{val.description.length < 20 ? val.description : val.description.substring(0, 20) + "..."}</td>
+                                    <td className='d-flex justify-content-between'>
+                                        <button className="btn btn-dark" onClick={() => deleteproduct(val._id)}><AiOutlineDelete /></button>
+                                        <button className="btn btn-dark"><AiOutlineEdit /></button>
+
+                                    </td>
+
+
 
                                 </tr>)
-                        } */}
+                        }
 
 
 
